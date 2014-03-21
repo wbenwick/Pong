@@ -17,13 +17,15 @@
     __weak IBOutlet FLXBallImageView *ballImageView1;
     __weak IBOutlet FLXBallImageView *ballImageView2;
    
-    UIDynamicAnimator   *dynamicAnimator;
-    UIPushBehavior      *pushBehavior;
-    UICollisionBehavior *collisionBehavior;
-    UIGravityBehavior   *gravityBehavior;
+    UIDynamicAnimator       *dynamicAnimator;
+    UIPushBehavior          *pushBehavior;
+    UICollisionBehavior     *collisionBehavior;
+    UIGravityBehavior       *gravityBehavior;
     UIDynamicItemBehavior   *ballDynamicBehavior1;
     UIDynamicItemBehavior   *ballDynamicBehavior2;
     UIDynamicItemBehavior   *paddleDynamicBehavior;
+    NSString                *ballImageString1;
+    NSString                *ballImageString2;
     
 }
 
@@ -41,6 +43,9 @@
     ballDynamicBehavior1 = [[UIDynamicItemBehavior alloc] initWithItems:@[ballImageView1, ballImageView2]];
 //    ballDynamicBehavior2 = [[UIDynamicItemBehavior alloc] initWithItems:@[ballImageView2]];
     paddleDynamicBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[paddleView]];
+
+    ballImageString1 = [NSString stringWithFormat:@"DonBora"];
+    ballImageString2 = [NSString stringWithFormat:@"Brandon"];
     
     pushBehavior.pushDirection = CGVectorMake(.5,.5);
     pushBehavior.active = YES;
@@ -104,25 +109,42 @@
 //    pushBehavior.magnitude = 0.5;
 //    pushBehavior.angle=0;
     
-    NSLog(@"Ball 1: %@", NSStringFromCGPoint([ballDynamicBehavior1 linearVelocityForItem:ballImageView1]));
-    NSLog(@"Ball 2: %@", NSStringFromCGPoint([ballDynamicBehavior1 linearVelocityForItem:ballImageView2]));
+//    NSLog(@"Ball 1: %@", NSStringFromCGPoint([ballDynamicBehavior1 linearVelocityForItem:ballImageView1]));
+//    NSLog(@"Ball 2: %@", NSStringFromCGPoint([ballDynamicBehavior1 linearVelocityForItem:ballImageView2]));
 
-    NSLog(@"Ball 1: %@", ballImageView1.accessibilityIdentifier);
-    NSLog(@"Ball 2: %@", ballImageView2.accessibilityIdentifier);
+//    NSLog(@"Ball 1: %@", ballImageView1.accessibilityIdentifier);
+//    NSLog(@"Ball 2: %@", ballImageView2.accessibilityIdentifier);
+
+    if ([item isEqual:ballImageView1]) {
+        NSLog(@"Ball 1 collision");
+
+        if ([ballImageString1 isEqualToString:@"Max"]) {
+            ballImageView1.image = [UIImage imageNamed:@"DonBora"];
+            ballImageString1 = @"DonBora";
+        }
+        else {
+            ballImageView1.image = [UIImage imageNamed:@"Max"];
+            ballImageString1 = @"Max";
+        }
+        
+    }
+
+    if ([item isEqual:ballImageView2]) {
+        NSLog(@"Ball 2 collision");
+
+        if ([ballImageString2 isEqualToString:@"Ryan"]) {
+            ballImageView2.image = [UIImage imageNamed:@"Brandon"];
+            ballImageString2 = @"Brandon";
+        }
+        else {
+            ballImageView2.image = [UIImage imageNamed:@"Ryan"];
+            ballImageString2 = @"Ryan";
+        }
+        
+    }
+
     
-    if ([ballImageView1.accessibilityIdentifier isEqualToString:@"Max"]) {
-        ballImageView1.image = [UIImage imageNamed:@"DonBora"];
-    }
-    else {
-        ballImageView1.image = [UIImage imageNamed:@"Max"];
-    }
-    
-    if ([ballImageView2.accessibilityIdentifier isEqualToString:@"Ryan"]) {
-        ballImageView2.image = [UIImage imageNamed:@"Brandon"];
-    }
-    else {
-        ballImageView2.image = [UIImage imageNamed:@"Ryan"];
-    }
+
     
 //    pushBehavior.pushDirection = CGVectorMake(0,0);
 
