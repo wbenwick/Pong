@@ -49,7 +49,7 @@
     
     pushBehavior.pushDirection = CGVectorMake(.5,.5);
     pushBehavior.active = YES;
-    pushBehavior.magnitude = 1.0;
+    pushBehavior.magnitude = 2.0;
     pushBehavior.angle = 45;
     [dynamicAnimator addBehavior:pushBehavior];
     
@@ -80,6 +80,7 @@
 
     collisionBehavior.collisionMode = UICollisionBehaviorModeEverything;
     collisionBehavior.translatesReferenceBoundsIntoBoundary = YES;
+
     collisionBehavior.collisionDelegate = self;
     [dynamicAnimator addBehavior:collisionBehavior];
     
@@ -148,6 +149,11 @@
     
 //    pushBehavior.pushDirection = CGVectorMake(0,0);
 
+}
+
+-(void) collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item1 withItem:(id<UIDynamicItem>)item2 atPoint:(CGPoint)p
+{
+    NSLog(@"Collided with %@ %@", [item1 description], [item2 description]);
 }
 
 -(IBAction)dragPaddle:(UIPanGestureRecognizer *)panGestureRecognizer
