@@ -153,7 +153,7 @@
 
 -(void) collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item1 withItem:(id<UIDynamicItem>)item2 atPoint:(CGPoint)p
 {
-    NSLog(@"Collided with %@ %@", [item1 description], [item2 description]);
+    NSLog(@"Collided with %@ %@", [item1 ], [item2 description]);
 }
 
 -(IBAction)dragPaddle:(UIPanGestureRecognizer *)panGestureRecognizer
