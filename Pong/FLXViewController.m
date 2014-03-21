@@ -55,7 +55,7 @@
     
     ballDynamicBehavior1.allowsRotation = YES;
     ballDynamicBehavior1.elasticity = 1.1;
-    ballDynamicBehavior1.friction = 0.01;
+    ballDynamicBehavior1.friction = 0.0;
     ballDynamicBehavior1.resistance = 0.0;
     [dynamicAnimator addBehavior:ballDynamicBehavior1];
 
