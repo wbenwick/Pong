@@ -49,7 +49,7 @@
     
     pushBehavior.pushDirection = CGVectorMake(.5,.5);
     pushBehavior.active = YES;
-    pushBehavior.magnitude = 2.0;
+    pushBehavior.magnitude = 1.0;
     pushBehavior.angle = 45;
     [dynamicAnimator addBehavior:pushBehavior];
     
@@ -116,33 +116,7 @@
 //    NSLog(@"Ball 1: %@", ballImageView1.accessibilityIdentifier);
 //    NSLog(@"Ball 2: %@", ballImageView2.accessibilityIdentifier);
 
-    if ([item isEqual:ballImageView1]) {
-        NSLog(@"Ball 1 collision");
 
-        if ([ballImageString1 isEqualToString:@"Max"]) {
-            ballImageView1.image = [UIImage imageNamed:@"DonBora"];
-            ballImageString1 = @"DonBora";
-        }
-        else {
-            ballImageView1.image = [UIImage imageNamed:@"Max"];
-            ballImageString1 = @"Max";
-        }
-        
-    }
-
-    if ([item isEqual:ballImageView2]) {
-        NSLog(@"Ball 2 collision");
-
-        if ([ballImageString2 isEqualToString:@"Ryan"]) {
-            ballImageView2.image = [UIImage imageNamed:@"Brandon"];
-            ballImageString2 = @"Brandon";
-        }
-        else {
-            ballImageView2.image = [UIImage imageNamed:@"Ryan"];
-            ballImageString2 = @"Ryan";
-        }
-        
-    }
 
     
 
@@ -153,7 +127,39 @@
 
 -(void) collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item1 withItem:(id<UIDynamicItem>)item2 atPoint:(CGPoint)p
 {
-    NSLog(@"Collided with %@ %@", [item1 ], [item2 description]);
+
+    if ([item1 isEqual:paddleView] || [item2 isEqual:paddleView])  {
+        NSLog(@"Collided with Paddle");
+        if ([item1 isEqual:ballImageView1] || [item2 isEqual:ballImageView1]) {
+            NSLog(@"Ball 1 collision");
+            
+            if ([ballImageString1 isEqualToString:@"Max"]) {
+                ballImageView1.image = [UIImage imageNamed:@"DonBora"];
+                ballImageString1 = @"DonBora";
+            }
+            else {
+                ballImageView1.image = [UIImage imageNamed:@"Max"];
+                ballImageString1 = @"Max";
+            }
+            
+        }
+        
+        if ([item1 isEqual:ballImageView2] || [item2 isEqual:ballImageView1] ) {
+            NSLog(@"Ball 2 collision");
+            
+            if ([ballImageString2 isEqualToString:@"Ryan"]) {
+                ballImageView2.image = [UIImage imageNamed:@"Brandon"];
+                ballImageString2 = @"Brandon";
+            }
+            else {
+                ballImageView2.image = [UIImage imageNamed:@"Ryan"];
+                ballImageString2 = @"Ryan";
+            }
+            
+        }
+    
+    
+    }
 }
 
 -(IBAction)dragPaddle:(UIPanGestureRecognizer *)panGestureRecognizer
