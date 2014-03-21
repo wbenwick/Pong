@@ -38,13 +38,14 @@
     dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
     pushBehavior  = [[UIPushBehavior alloc] initWithItems:@[ballImageView1, ballImageView2] mode: UIPushBehaviorModeInstantaneous];
     collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[ballImageView1, ballImageView2, paddleView]];
-    ballDynamicBehavior1 = [[UIDynamicItemBehavior alloc] initWithItems:@[ballImageView1]];
-    ballDynamicBehavior2 = [[UIDynamicItemBehavior alloc] initWithItems:@[ballImageView2]];
+    ballDynamicBehavior1 = [[UIDynamicItemBehavior alloc] initWithItems:@[ballImageView1, ballImageView2]];
+//    ballDynamicBehavior2 = [[UIDynamicItemBehavior alloc] initWithItems:@[ballImageView2]];
     paddleDynamicBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[paddleView]];
     
-    pushBehavior.pushDirection = CGVectorMake(0.5,1.0);
+    pushBehavior.pushDirection = CGVectorMake(.5,.5);
     pushBehavior.active = YES;
-    pushBehavior.magnitude = 0.5;
+    pushBehavior.magnitude = 1.0;
+    pushBehavior.angle = 45;
     [dynamicAnimator addBehavior:pushBehavior];
     
 //    gravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[ballView]];
@@ -53,20 +54,23 @@
 //    [dynamicAnimator addBehavior:gravityBehavior];
 
     
-    ballDynamicBehavior1.allowsRotation = YES;
-    ballDynamicBehavior1.elasticity = 1.1;
-    ballDynamicBehavior1.friction = 0.01;
-    ballDynamicBehavior1.resistance = 0.0;
+    ballDynamicBehavior1.allowsRotation = NO;
+    ballDynamicBehavior1.elasticity = 1.0f;
+    ballDynamicBehavior1.friction = 0.0f;
+    ballDynamicBehavior1.resistance = 0.0f;
     [dynamicAnimator addBehavior:ballDynamicBehavior1];
-
-    ballDynamicBehavior2.allowsRotation = NO;
-    ballDynamicBehavior2.elasticity = 1.0;
-    ballDynamicBehavior2.friction = 0.0;
-    ballDynamicBehavior2.resistance = 0.0;
-    [dynamicAnimator addBehavior:ballDynamicBehavior2];
+//
+//    ballDynamicBehavior2.allowsRotation = YES;
+//    ballDynamicBehavior2.elasticity = 1.0;
+//    ballDynamicBehavior2.friction = 0.0;
+//    ballDynamicBehavior2.resistance = 0.0;
+//    [dynamicAnimator addBehavior:ballDynamicBehavior2];
     
     paddleDynamicBehavior.allowsRotation = NO;
     paddleDynamicBehavior.density = 10000.0f;
+    paddleDynamicBehavior.elasticity = 1.0f;
+    paddleDynamicBehavior.friction = 0;
+    paddleDynamicBehavior.resistance = 0;
     [dynamicAnimator addBehavior:paddleDynamicBehavior];
 
     collisionBehavior.collisionMode = UICollisionBehaviorModeEverything;
@@ -85,17 +89,43 @@
 
 - (void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier atPoint:(CGPoint)p
 {
-
+    
 //    [UIView animateWithDuration:1.0 animations:^{
-//        ballView.backgroundColor = [UIColor greenColor];
+//        ballImageView1.tintColor = [UIColor greenColor];
 //    } completion:^(BOOL finished) {
 //        [UIView animateWithDuration:1.0 animations:^{
-//            ballView.backgroundColor = [UIColor whiteColor];
+//            ballImageView1.tintColor = [UIColor whiteColor];
 //        }];
 //        NSLog(@"animation complete");
 //    }];
 //    NSLog(@"collision detected");
+
+//      ballDynamicBehavior1.elasticity = 0.5f;
+//    pushBehavior.magnitude = 0.5;
+//    pushBehavior.angle=0;
     
+    NSLog(@"Ball 1: %@", NSStringFromCGPoint([ballDynamicBehavior1 linearVelocityForItem:ballImageView1]));
+    NSLog(@"Ball 2: %@", NSStringFromCGPoint([ballDynamicBehavior1 linearVelocityForItem:ballImageView2]));
+
+    NSLog(@"Ball 1: %@", ballImageView1.accessibilityIdentifier);
+    NSLog(@"Ball 2: %@", ballImageView2.accessibilityIdentifier);
+    
+    if ([ballImageView1.accessibilityIdentifier isEqualToString:@"Max"]) {
+        ballImageView1.image = [UIImage imageNamed:@"DonBora"];
+    }
+    else {
+        ballImageView1.image = [UIImage imageNamed:@"Max"];
+    }
+    
+    if ([ballImageView2.accessibilityIdentifier isEqualToString:@"Ryan"]) {
+        ballImageView2.image = [UIImage imageNamed:@"Brandon"];
+    }
+    else {
+        ballImageView2.image = [UIImage imageNamed:@"Ryan"];
+    }
+    
+//    pushBehavior.pushDirection = CGVectorMake(0,0);
+
 }
 
 -(IBAction)dragPaddle:(UIPanGestureRecognizer *)panGestureRecognizer
